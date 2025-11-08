@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Rick and Morty Personagens</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+  <!-- Banner Portal Neon -->
+  <section class="banner-full">
+    <img src="img/rickandmorty.png" alt="Portal Rick and Morty" class="portal-bg">
+    <div class="banner-content">
+      <h1 class="neon-text">Rick & Morty Explorer</h1>
+      <p class="subtitle">Descubra todos os personagens do multiverso</p>
+    </div>
+  </section>
+
+  <!-- Cabeçalho fixo -->
+  <header class="site-header" id="topHeader">
+  <div class="title-container">
+    <img src="img/portalzão.png" alt="Portal do Rick" class="portal-icon">
+    <h1><span>Rick & Morty</span> Explorador de Personagens</h1>
+  </div>
+
+  <p class="subtitle">
+    Total de personagens: <strong id="totalChars">...</strong>
+  </p>
+
+  <section class="controls">
+    <input id="search" type="search" placeholder="Buscar por nome...">
+    <input id="idSearch" type="number" placeholder="Ou por ID...">
+    <select id="statusFilter">
+      <option value="all">Todos os status</option>
+      <option value="Alive">Alive</option>
+      <option value="Dead">Dead</option>
+      <option value="unknown">unknown</option>
+    </select>
+  </section>
+</header>
+
+
+  <main>
+  <section id="cardsContainer" class="cards-container" aria-live="polite"></section>
+  <div class="load-more-wrapper">
+    <button id="loadMore">Carregar mais</button>
+  </div>
+  <div id="loading" class="loading">Carregando...</div>
+  <div id="error" class="error" hidden>Erro ao carregar dados.</div>
+</main>
+
+  <footer class="site-footer">
+  <div class="footer-stats">
+    <span>CHARACTERS: <strong id="charCount">0</strong></span>
+    <span>LOCATIONS: <strong id="locCount">0</strong></span>
+    <span>EPISODES: <strong id="epCount">0</strong></span>
+  </div>
+
+  <div class="footer-status">
+    <span>SERVER STATUS:</span>
+    <span class="status-dot"></span>
+  </div>
+
+  <div class="footer-links">
+    <a href="https://github.com/afuh/rick-and-morty-api" target="_blank" title="Repositório no GitHub">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub">
+    </a>
+  </div>
+
+  <p class="footer-credit">
+    <code>&lt;/&gt;</code> by <strong>Lucas Ribeiro</strong> 2025
+  </p>
+</footer>
+
+  <script>
+    async function updateFooterCounts() {
+      try {
+        const [charRes, locRes, epRes] = await Promise.all([
+          fetch('https://rickandmortyapi.com/api/character'),
+          fetch('https://rickandmortyapi.com/api/location'),
+          fetch('https://rickandmortyapi.com/api/episode')
+        ]);
+        const [charData, locData, epData] = await Promise.all([
+          charRes.json(), locRes.json(), epRes.json()
+        ]);
+
+        document.getElementById('charCount').textContent = charData.info.count;
+        document.getElementById('locCount').textContent = locData.info.count;
+        document.getElementById('epCount').textContent = epData.info.count;
+
+        document.querySelector('.status-dot').style.backgroundColor = 'limegreen';
+      } catch {
+        document.querySelector('.status-dot').style.backgroundColor = 'red';
+      }
+    }
+    updateFooterCounts();
+  </script>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

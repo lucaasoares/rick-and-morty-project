@@ -1,0 +1,400 @@
+/* =========================
+   VARIÁVEIS GLOBAIS
+========================= */
+:root {
+  --bg: #050810;
+  --card: #14192f;
+  --accent: #6de4ff;
+  --muted: #9aa4b2;
+  --glass: rgba(255, 255, 255, 0.04);
+}
+
+/* Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #e6f6fb;
+  background: radial-gradient(circle at top, #0b1020 0%, #050810 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Cabeçalho */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(11, 16, 32, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(109, 228, 255, 0.2);
+  z-index: 1000;
+  text-align: center;
+  padding: 28px 20px 20px;
+  box-shadow: 0 0 30px rgba(109, 228, 255, 0.25);
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+}
+
+.portal-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  animation: spinPortal 6s linear infinite;
+  filter: drop-shadow(0 0 8px #00ffaa);
+}
+
+@keyframes spinPortal {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.title-container h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #6de4ff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 15px #6de4ff, 0 0 35px #00ffff, 0 0 80px #00ffaa;
+  animation: neonPulse 3s ease-in-out infinite alternate;
+}
+
+.title-container h1 span {
+  color: #9bff9b;
+  text-shadow: 0 0 15px #9bff9b, 0 0 40px #00ffaa, 0 0 70px #00ffcc;
+}
+
+@keyframes neonPulse {
+  0% { text-shadow: 0 0 5px #00ffff, 0 0 25px #00ffcc; }
+  100% { text-shadow: 0 0 20px #6de4ff, 0 0 60px #00ffff; }
+}
+
+/* =========================
+   BANNER SEM EFEITO NEON
+========================= */
+.banner-full {
+  position: relative;
+  width: 100%;
+  height: 80vh; /* 🔹 aumenta um pouco a altura */
+  overflow: hidden;
+  margin-top: 180px; /* 🔹 empurra tudo mais pra baixo */
+}
+
+/* 🔹 Escurece levemente o fundo para dar contraste */
+.banner-full::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.portal-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 🔹 centraliza verticalmente a imagem */
+  padding-bottom: 0; /* 🔹 sem padding extra */
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* 🔹 centraliza texto no meio */
+  height: 100%;
+  text-align: center;
+  padding-bottom: 0; /* 🔹 remove o empurrão anterior */
+}
+
+.neon-text {
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: #b3ff00; /* verde-limão neon */
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 12px #aaff00,
+    0 0 35px #7fff00,
+    0 0 70px #00ffaa;
+  animation: neonGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes neonGlow {
+  0% { text-shadow: 0 0 8px #aaff00, 0 0 30px #00ffaa; }
+  100% { text-shadow: 0 0 18px #b3ff00, 0 0 70px #00ffaa; }
+}
+
+/* 🔹 Subtítulo mais claro e legível */
+.banner-content .subtitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #eaffff; /* quase branco, para brilhar sobre o fundo */
+  margin-top: 12px;
+  text-shadow:
+    0 0 8px #00ffff,
+    0 0 25px #00ccff,
+    0 0 45px #00ffee;
+  animation: subtitleGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes subtitleGlow {
+  0% { text-shadow: 0 0 8px #00ffff, 0 0 25px #00ccff; }
+  100% { text-shadow: 0 0 12px #00ffee, 0 0 45px #00ffff; }
+}
+
+.banner-full {
+  background-attachment: fixed;
+}
+
+/* Main */
+main { padding-top: 15vh; }
+
+/* Controles */
+.controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 12px;
+}
+
+.controls input,
+.controls select,
+.controls button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass);
+  color: inherit;
+}
+
+.controls button {
+  cursor: pointer;
+  border: 1px solid var(--accent);
+  transition: background 0.3s ease;
+}
+
+.controls button:hover {
+  background: rgba(109, 228, 255, 0.2);
+}
+
+.controls select {
+  background-color: #1a1f35;
+  color: #ffffff;
+  border: 1px solid var(--accent);
+}
+
+/* Cards */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 255, 200, 0.1);
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 255, 255, 0.25);
+}
+
+.card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.card-body { padding: 12px; }
+.card-body h3 { margin-bottom: 6px; font-size: 1.1rem; }
+
+/* Status */
+.status {
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.status.alive { background: rgba(108,237,143,0.12); color: #6ced8f; }
+.status.dead { background: rgba(255,80,80,0.08); color: #ff8a8a; }
+.status.unknown { background: rgba(255,255,255,0.05); color: var(--muted); }
+
+/* Rodapé */
+.site-footer {
+  text-align: center;
+  padding: 25px 10px;
+  color: var(--muted);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: 0.9rem;
+  margin-top: 40px;
+}
+
+.footer-stats {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4cff80;
+  box-shadow: 0 0 10px #4cff80;
+}
+
+.footer-links img {
+  width: 28px;
+  height: 28px;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+  transition: transform 0.2s ease, opacity 0.2s;
+}
+
+.footer-links img:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.footer-credit {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.footer-credit code { color: var(--accent); font-weight: bold; }
+.footer-credit strong { color: #fff; font-weight: 600; }
+
+
+
+
+.character-details {
+  max-width: 900px;
+  margin: 150px auto;
+  padding: 30px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.1);
+  text-align: center;
+}
+
+.char-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.char-img {
+  width: 220px;
+  height: 220px;
+  border-radius: 14px;
+  box-shadow: 0 0 15px rgba(0,255,255,0.3);
+}
+
+.char-info {
+  text-align: left;
+  max-width: 400px;
+}
+
+.char-info h2 {
+  font-size: 2rem;
+  color: #6de4ff;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px #00ffaa;
+}
+
+.char-episodes {
+  margin-top: 30px;
+  text-align: left;
+}
+
+.char-episodes ul {
+  list-style: none;
+  padding: 0;
+}
+
+.char-episodes li {
+  margin: 4px 0;
+  font-size: 0.9rem;
+}
+
+.char-episodes a {
+  color: #9bff9b;
+  text-decoration: none;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 10px 20px;
+  background: rgba(109, 228, 255, 0.15);
+  border: 1px solid #6de4ff;
+  border-radius: 8px;
+  color: #6de4ff;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(109, 228, 255, 0.3);
+}
+
+.load-more-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 25px 0;
+}
+
+.load-more-wrapper button {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: var(--glass);
+  color: #e6f6fb;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.load-more-wrapper button:hover {
+  background: rgba(109, 228, 255, 0.2);
+}

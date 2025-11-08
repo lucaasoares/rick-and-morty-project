@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rick and Morty - Detalhes do Personagem</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="title-container">
+        <img src="img/portalzão.png" alt="Portal do Rick" class="portal-icon">
+        <h1><span>Rick & Morty</span> Detalhes do Personagem</h1>
+      </div>
+    </header>
+
+    <main id="characterDetails" class="character-details"></main>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const charId = params.get('id');
+
+      async function loadCharacter() {
+        if (!charId) {
+          document.getElementById('characterDetails').innerHTML = "<p>ID inválido.</p>";
+          return;
+        }
+
+        try {
+          const res = await fetch(`https://rickandmortyapi.com/api/character/${charId}`);
+          const char = await res.json();
+
+          document.getElementById('characterDetails').innerHTML = `
+            <div class="char-box">
+              <img src="${char.image}" alt="${char.name}" class="char-img">
+              <div class="char-info">
+                <h2>${char.name}</h2>
+                <p><strong>Status:</strong> ${char.status}</p>
+                <p><strong>Espécie:</strong> ${char.species}</p>
+                <p><strong>Gênero:</strong> ${char.gender}</p>
+                <p><strong>Origem:</strong> ${char.origin?.name}</p>
+                <p><strong>Local Atual:</strong> ${char.location?.name}</p>
+              </div>
+            </div>
+            <div class="char-episodes">
+              <h3>Episódios</h3>
+              <ul>
+                ${char.episode.map(ep => `<li><a href="${ep}" target="_blank">${ep}</a></li>`).join('')}
+              </ul>
+            </div>
+            <a href="index.html" class="back-btn">← Voltar</a>
+          `;
+        } catch {
+          document.getElementById('characterDetails').innerHTML = "<p>Erro ao carregar personagem.</p>";
+        }
+      }
+
+      loadCharacter();
+    </script>
+  </body>
+</html>
